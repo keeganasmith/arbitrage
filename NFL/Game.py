@@ -11,8 +11,8 @@ class Game:
         self.unique_id = unique_id
         self.shared_id = shared_id
     def set_unique_id(self):
-        self.unique_id = self.site + self.home_team + self.away_team + str(self.home_odds) + str(self.away_odds) + str(self.day) + str(self.month) + str(self.year)
-        self.shared_id = self.home_team + self.away_team + str(self.home_odds) + str(self.away_odds) + str(self.day) + str(self.month) + str(self.year)
+        self.unique_id = self.site + self.home_team + self.away_team  + str(self.day) + str(self.month) + str(self.year)
+        self.shared_id = self.home_team + self.away_team + str(self.day) + str(self.month) + str(self.year)
     def __dict__(self):
         return {
             "site": self.site,
@@ -23,7 +23,8 @@ class Game:
             "day" : self.day,
             "month": self.month,
             "year" : self.year,
-            "unique_id" : self.unique_id
+            "unique_id" : self.unique_id,
+            "shared_id" : self.shared_id
         }
     def __str__(self):
         return f"site: {self.site}\nhome_team: {self.home_team}\naway_team: {self.away_team}\nhome_odds: {self.home_odds}\naway_odds: {self.away_odds}\ndate: {self.month}/{self.day}/{self.year}"

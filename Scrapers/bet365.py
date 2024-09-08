@@ -66,8 +66,8 @@ class Bet365:
                 team_names = div.find_elements(By.CSS_SELECTOR, ".sac-ParticipantFixtureDetailsHigherAmericanFootball_Team")
                 if(len(team_names) < 2):
                     continue
-                away_team = team_names[0].text
-                home_team = team_names[1].text
+                away_team = team_names[0].text.split(" ")[0]
+                home_team = team_names[1].text.split(" ")[0]
                 my_game = NFL_Game(site = self.url, home_team = home_team, away_team = away_team, day = day, month = month, year = year)
                 my_game.set_unique_id()
                 games.append(my_game)
