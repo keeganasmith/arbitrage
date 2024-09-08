@@ -1,4 +1,5 @@
 from Scrapers.bet365 import Bet365
+from Scrapers.draftkings import Draftkings
 import Database.CRUD as db
 def arb(capital, a_odds, b_odds):
     a_stake = capital / (1 + a_odds / b_odds);
@@ -9,6 +10,9 @@ def arb(capital, a_odds, b_odds):
     return [a_stake, b_stake, guarantee_profit]
 if __name__ == "__main__":
 
-    game_records = Bet365().get_nfl_games()
-    db.update_nfl_games("nfl_games", game_records)
+    game_records = Draftkings().get_nfl_games()
+    for game in game_records:
+        print(game)
+    #db.update_nfl_games("nfl_games", game_records)
     #result = arb(100, 2.62, 1.68)
+    
