@@ -67,7 +67,9 @@ class Bet365:
                     continue
                 away_team = team_names[0].text
                 home_team = team_names[1].text
-                games.append(NFL_Game(site = self.url, home_team = home_team, away_team = away_team, day = day, month = month, year = year, unique_id = self.url + home_team + away_team + str(day) + str(month) + str(year)))
+                my_game = NFL_Game(site = self.url, home_team = home_team, away_team = away_team, day = day, month = month, year = year)
+                my_game.set_unique_id()
+                games.append(my_game)
         spread_columns = game_grid.find_elements(By.CSS_SELECTOR, ".sgl-MarketOddsExpand")
         money_column = spread_columns[2]
         odds_elements = money_column.find_elements(By.CSS_SELECTOR, ".sac-ParticipantOddsOnly50OTB_Odds")

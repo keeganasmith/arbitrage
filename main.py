@@ -11,8 +11,7 @@ def arb(capital, a_odds, b_odds):
 if __name__ == "__main__":
 
     game_records = Draftkings().get_nfl_games()
-    for game in game_records:
-        print(game)
+    
     #db.update_nfl_games("nfl_games", game_records)
     #result = arb(100, 2.62, 1.68)
     

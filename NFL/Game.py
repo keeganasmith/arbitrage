@@ -9,6 +9,8 @@ class Game:
         self.month = month;
         self.year = year
         self.unique_id = unique_id
+    def set_unique_id(self):
+        self.unique_id = self.site + self.home_team + self.away_team + str(self.home_odds) + str(self.away_odds) + str(self.day) + str(self.month) + str(self.year)
     def __dict__(self):
         return {
             "site": self.site,

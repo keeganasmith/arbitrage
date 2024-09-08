@@ -80,7 +80,7 @@ class Draftkings():
                 if(i % 2 == 1):
                     my_game = NFL_Game()
                     column = row.find_element(By.CSS_SELECTOR, ".sportsbook-table__column-row")
-                    my_game.away_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text
+                    my_game.away_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text.split(" ")[0]
                     odds_text = row.find_elements(By.CSS_SELECTOR, ".sportsbook-odds")[2].text
                     odds_text = odds_text.replace('−', '-')
                     my_game.away_odds = int(odds_text)
@@ -89,10 +89,11 @@ class Draftkings():
                     my_game.year = year
                     my_game.site = self.url
                 else:
-                    my_game.home_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text
+                    my_game.home_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text.split(" ")[0]
                     odds_text = row.find_elements(By.CSS_SELECTOR, ".sportsbook-odds")[2].text
                     odds_text = odds_text.replace('−', '-')
                     my_game.home_odds = int(odds_text)
+                    my_game.set_unique_id()
                     games.append(my_game)
                 i += 1
         return games
