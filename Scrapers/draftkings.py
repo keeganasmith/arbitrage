@@ -81,20 +81,31 @@ class Draftkings():
                     my_game = NFL_Game()
                     column = row.find_element(By.CSS_SELECTOR, ".sportsbook-table__column-row")
                     my_game.away_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text.split(" ")[0]
-                    odds_text = row.find_elements(By.CSS_SELECTOR, ".sportsbook-odds")[2].text
-                    odds_text = odds_text.replace('−', '-')
-                    my_game.away_odds = int(odds_text)
-                    my_game.day = day;
-                    my_game.month = month;
-                    my_game.year = year
-                    my_game.site = self.url
+                    try:
+                        odds_text = row.find_elements(By.TAG_NAME, "td")[2].find_element(By.TAG_NAME, "span").text
+                        odds_text = odds_text.replace('−', '-')
+                        my_game.away_odds = int(odds_text)
+                        my_game.day = day;
+                        my_game.month = month;
+                        my_game.year = year
+                        my_game.site = self.url
+                    except Exception as e:
+                        print("couldn't find the odds for this game")
+                        my_game = None
+                        i += 1
                 else:
-                    my_game.home_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text.split(" ")[0]
-                    odds_text = row.find_elements(By.CSS_SELECTOR, ".sportsbook-odds")[2].text
-                    odds_text = odds_text.replace('−', '-')
-                    my_game.home_odds = int(odds_text)
-                    my_game.set_unique_id()
-                    games.append(my_game)
+                    try:
+                        my_game.home_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text.split(" ")[0]
+                        odds_columns = row.find_elements(By.TAG_NAME, "td")[2].find_element(By.TAG_NAME, "span").text
+                        odds_text = odds_text.replace('−', '-')
+                        my_game.home_odds = int(odds_text)
+                        my_game.set_unique_id()
+                        games.append(my_game)
+                    except Exception as e:
+                        print("couldn't find the odds for this game")
+                        my_game = None;
+
+                    
                 i += 1
         return games
             
