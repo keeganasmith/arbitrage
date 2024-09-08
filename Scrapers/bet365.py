@@ -59,7 +59,7 @@ class Bet365:
                     continue
                 away_team = team_names[0].text
                 home_team = team_names[1].text
-                games.append(NFL_Game(site = self.url, home_team = home_team, away_team = away_team, day = day, month = month, year = year))
+                games.append(NFL_Game(site = self.url, home_team = home_team, away_team = away_team, day = day, month = month, year = year, unique_id = self.url + home_team + away_team + str(day) + str(month) + str(year)))
         print("games length", len(games))
         # for container in name_containers:
         #     team_names = container.find_elements(By.CSS_SELECTOR, ".sac-ParticipantFixtureDetailsHigherAmericanFootball_Team")
@@ -73,7 +73,9 @@ class Bet365:
         while(i < len(odds_elements) - 1):
             away_odds = odds_elements[i].text
             home_odds = odds_elements[i+1].text
-            games[i // 2].home_odds = home_odds
-            games[i // 2].away_odds = away_odds
+            if(home_odds):
+                games[i // 2].home_odds = int(home_odds)
+            if(away_odds):
+                games[i // 2].away_odds = int(away_odds)
             i += 2
         return games
