@@ -39,6 +39,7 @@ class Bet365:
         sport_ribbon = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".crm-ClassificationRibbonModule_CompetitionScrollerContainer")))
         nfl_button = sport_ribbon.find_element(By.XPATH, "//*[text()='NFL']")
         nfl_button.click()
+
         game_container = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".cm-CouponMarketGroup")))
         game_grid = game_container.find_element(By.CSS_SELECTOR, ".gl-MarketGroupContainer")
         game_name_column = game_grid.find_element(By.CSS_SELECTOR, ".sgl-MarketFixtureDetailsLabel")
@@ -74,12 +75,18 @@ class Bet365:
         money_column = spread_columns[2]
         odds_elements = money_column.find_elements(By.CSS_SELECTOR, ".sac-ParticipantOddsOnly50OTB_Odds")
         i = 0
+        current_games_index = 0;
         while(i < len(odds_elements) - 1):
             away_odds = odds_elements[i].text
             home_odds = odds_elements[i+1].text
             if(home_odds):
-                games[i // 2].home_odds = int(home_odds)
+                games[current_games_index].home_odds = int(home_odds)
             if(away_odds):
-                games[i // 2].away_odds = int(away_odds)
+                games[current_games_index].away_odds = int(away_odds)
+            if(not home_odds or not away_odds):
+                del games[current_games_index]
+                i += 2
+                continue;
             i += 2
+            current_games_index += 1
         return games

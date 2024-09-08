@@ -96,10 +96,11 @@ class Draftkings():
                 else:
                     try:
                         my_game.home_team = row.find_element(By.CSS_SELECTOR, ".event-cell__name-text").text.split(" ")[0]
-                        odds_columns = row.find_elements(By.TAG_NAME, "td")[2].find_element(By.TAG_NAME, "span").text
+                        odds_text = row.find_elements(By.TAG_NAME, "td")[2].find_element(By.TAG_NAME, "span").text
                         odds_text = odds_text.replace('−', '-')
                         my_game.home_odds = int(odds_text)
                         my_game.set_unique_id()
+                        print(f"odds for game: {my_game.away_team} at {my_game.home_team} is {my_game.away_odds} - {my_game.home_odds}")
                         games.append(my_game)
                     except Exception as e:
                         print("couldn't find the odds for this game")

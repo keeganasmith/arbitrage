@@ -29,7 +29,8 @@ cursor.execute("""
         day INT,
         month INT,
         year INT,
-        unique_id VARCHAR(100)
+        unique_id VARCHAR(100),
+        shared_id VARCHAR(100)
     );
 """)
 

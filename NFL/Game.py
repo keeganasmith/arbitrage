@@ -1,5 +1,5 @@
 class Game:
-    def __init__(self, site:str = "", home_team:str = "", away_team:str = "", home_odds:int = 0, away_odds:int = 0, day: int = 0, month:int = 0, year:int = 0, unique_id:str = ""):
+    def __init__(self, site:str = "", home_team:str = "", away_team:str = "", home_odds:int = 0, away_odds:int = 0, day: int = 0, month:int = 0, year:int = 0, unique_id:str = "", shared_id:str = ""):
         self.site = site;
         self.home_team = home_team;
         self.away_team = away_team;
@@ -9,8 +9,10 @@ class Game:
         self.month = month;
         self.year = year
         self.unique_id = unique_id
+        self.shared_id = shared_id
     def set_unique_id(self):
         self.unique_id = self.site + self.home_team + self.away_team + str(self.home_odds) + str(self.away_odds) + str(self.day) + str(self.month) + str(self.year)
+        self.shared_id = self.home_team + self.away_team + str(self.home_odds) + str(self.away_odds) + str(self.day) + str(self.month) + str(self.year)
     def __dict__(self):
         return {
             "site": self.site,
