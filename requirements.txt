@@ -1,2 +1,4 @@
 requests
 selenium
+psycopg2
+python-dotenv
