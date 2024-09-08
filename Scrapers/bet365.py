@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+
 import time
 from datetime import datetime
 from NFL.Game import Game as NFL_Game; 
@@ -23,10 +25,15 @@ month_map = {
 class Bet365:
     def __init__(self):
         self.url = "https://www.la.bet365.com/"
-        self.driver = webdriver.Chrome()
-        self.driver.get(self.url)
+        chrome_options = Options()
+        #chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--window-size=1920,1080")
+        # chrome_options.add_argument("--no-sandbox")
+        self.driver = webdriver.Chrome(options=chrome_options)
     
     def get_nfl_games(self):
+        self.driver.get(self.url)
+
         wait = WebDriverWait(self.driver, 10)
 
         sport_ribbon = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".crm-ClassificationRibbonModule_CompetitionScrollerContainer")))
@@ -61,12 +68,6 @@ class Bet365:
                 away_team = team_names[0].text
                 home_team = team_names[1].text
                 games.append(NFL_Game(site = self.url, home_team = home_team, away_team = away_team, day = day, month = month, year = year, unique_id = self.url + home_team + away_team + str(day) + str(month) + str(year)))
-        print("games length", len(games))
-        # for container in name_containers:
-        #     team_names = container.find_elements(By.CSS_SELECTOR, ".sac-ParticipantFixtureDetailsHigherAmericanFootball_Team")
-        #     away_team = team_names[0].text
-        #     home_team = team_names[1].text
-        #     games.append(NFL_Game(site = self.url, home_team = home_team, away_team = away_team))
         spread_columns = game_grid.find_elements(By.CSS_SELECTOR, ".sgl-MarketOddsExpand")
         money_column = spread_columns[2]
         odds_elements = money_column.find_elements(By.CSS_SELECTOR, ".sac-ParticipantOddsOnly50OTB_Odds")

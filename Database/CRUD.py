@@ -81,7 +81,6 @@ def update_nfl_games(table, game_records):
     games_to_insert = []
     for game in game_records:
         if(not (game.unique_id in records_to_not_insert)):
-            print(game)
             games_to_insert.append(game)
     insert_objects(table, games_to_insert)
 
