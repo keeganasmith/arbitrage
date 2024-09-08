@@ -18,14 +18,39 @@ connection = psycopg2.connect(
     password=password,
     port=port_id
 )
+def get_column_names(table_name):
+    cursor = connection.cursor()
 
+    cursor.execute(f"SELECT * FROM {table_name} LIMIT 1;")
+    column_names = [desc[0] for desc in cursor.description]
+    return column_names
 def retrieve_records(table_name):
     cursor = connection.cursor()
 
     select_query = f"SELECT * FROM {table_name};"
     cursor.execute(select_query)
     return cursor.fetchall()
-
+def convert_query_result_to_dicts(table, query_result):
+    column_names = get_column_names(table)
+    result = []
+    for row in query_result:
+        my_dict = dict(zip(column_names, row))
+        result.append(my_dict)
+    return result
+def groupby(table_name, column):
+    cursor = connection.cursor()
+    select_query = f'''SELECT *
+    FROM {table_name}
+    WHERE {column} IN (
+        SELECT {column}
+        FROM {table_name}
+        GROUP BY {column}
+        HAVING COUNT(*) > 1
+    )
+    ORDER BY shared_id;'''
+    cursor.execute(select_query);
+    query_result = cursor.fetchall()
+    return convert_query_result_to_dicts(table_name, query_result)
 def insert_object(table, record):
     cursor = connection.cursor()
 
@@ -54,12 +79,7 @@ def insert_objects(table, records):
         values.append(tuple(value.__dict__().values()))    
     cursor.executemany(insert_query, values)
     connection.commit()
-def get_column_names(table_name):
-    cursor = connection.cursor()
 
-    cursor.execute(f"SELECT * FROM {table_name} LIMIT 1;")
-    column_names = [desc[0] for desc in cursor.description]
-    return column_names
 def update_nfl_games(table, game_records):
     cursor = connection.cursor()
 
