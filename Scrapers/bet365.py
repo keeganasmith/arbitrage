@@ -38,7 +38,7 @@ class Bet365:
         name_containers = game_name_column.find_elements(By.TAG_NAME, "div")
         team_name_div_class = "sac-ParticipantFixtureDetailsHigherAmericanFootball "
         #sac-ParticipantFixtureDetailsHigherAmericanFootball sac-StylingRCAmericanModule_Width-0 rcl-MarketCouponAdvancedBase_Divider gl-Market_General-cn1 sac-ParticipantFixtureDetailsHigherAmericanFootball-wide
-        date_div_class = "rcl-MarketHeaderLabel rcl-MarketHeaderLabel-isdate"
+        date_div_class = "rcl-MarketHeaderLabel-isdate " 
         month = 0;
         day = 0;
         games = []
@@ -46,13 +46,14 @@ class Bet365:
         year = now.year
         for div in name_containers:
             div_class = div.get_attribute("class").strip()
-            if(div_class == date_div_class):
+            if(date_div_class in date_div_class):
                 date_list = div.text.split(" ")
-                new_month = month_map[date_list[1]]
-                if(new_month < month):
-                    year += 1
-                month = new_month
-                day = int(date_list[2])
+                if(len(date_list) > 2 and (date_list[1] in month_map)):
+                    new_month = month_map[date_list[1]]
+                    if(new_month < month):
+                        year += 1
+                    month = new_month
+                    day = int(date_list[2])
             if(team_name_div_class in div_class):
                 team_names = div.find_elements(By.CSS_SELECTOR, ".sac-ParticipantFixtureDetailsHigherAmericanFootball_Team")
                 if(len(team_names) < 2):
