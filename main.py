@@ -1,6 +1,8 @@
 from Scrapers.bet365 import Bet365
 from Scrapers.draftkings import Draftkings
 import Database.CRUD as db
+import concurrent.futures
+
 def arb(capital, a_odds, b_odds):
     a_stake = capital / (1 + a_odds / b_odds);
     b_stake = capital - a_stake;
@@ -45,9 +47,14 @@ def update_nfl_games_for_website(scraper_class):
     my_scraper.driver.quit()
     db.update_nfl_games("nfl_games", games)
 if __name__ == "__main__":
-    # update_nfl_games_for_website(Bet365)
-    # update_nfl_games_for_website(Draftkings)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(update_nfl_games_for_website, Bet365),
+            executor.submit(update_nfl_games_for_website, Draftkings)
+        ]
+
+        for future in concurrent.futures.as_completed(futures):
+            future.result()
+
     find_arb_opps_nfl()
-    #db.update_nfl_games("nfl_games", game_records)
-    #result = arb(100, 2.62, 1.68)
     

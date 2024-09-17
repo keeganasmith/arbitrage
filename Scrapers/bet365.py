@@ -25,9 +25,7 @@ month_map = {
 class Bet365:
     def __init__(self):
         self.url = "https://www.la.bet365.com/"
-        chrome_options = Options()
         #chrome_options.add_argument("--headless=new")
-        chrome_options.add_argument("--window-size=1920,1080")
         # chrome_options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=chrome_options)
     
