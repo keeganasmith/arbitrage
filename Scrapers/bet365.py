@@ -40,8 +40,7 @@ class Bet365:
         nfl_button = sport_ribbon.find_element(By.XPATH, "//*[text()='NFL']")
         nfl_button.click()
 
-        game_container = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".cm-CouponMarketGroup")))
-        game_grid = game_container.find_element(By.CSS_SELECTOR, ".gl-MarketGroupContainer")
+        game_grid = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".gl-MarketGroupContainer")))
         game_name_column = game_grid.find_element(By.CSS_SELECTOR, ".sgl-MarketFixtureDetailsLabel")
         name_containers = game_name_column.find_elements(By.TAG_NAME, "div")
         team_name_div_class = "sac-ParticipantFixtureDetailsHigherAmericanFootball "

@@ -7,7 +7,7 @@ from deepdiff import DeepDiff
 load_dotenv()
 
 hostname = os.environ["hostname"]
-username = os.environ["username"]
+username = os.environ["user"]
 password = os.environ["password"]
 database = "games"
 port_id = os.environ["port_id"]
