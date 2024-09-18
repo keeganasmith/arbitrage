@@ -2,6 +2,7 @@ from Scrapers.bet365 import Bet365
 from Scrapers.draftkings import Draftkings
 from Scrapers.betmgm import Betmgm
 from  Scrapers.betonline import Betonline
+from Scrapers.williamhill import Williamhill
 import Database.CRUD as db
 import concurrent.futures
 
@@ -50,7 +51,7 @@ def update_nfl_games_for_website(scraper_class):
     db.update_nfl_games("nfl_games", games)
 if __name__ == "__main__":
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        scrapers = [Bet365, Draftkings, Betmgm, Betonline]
+        scrapers = [Bet365, Draftkings, Betmgm, Betonline, Williamhill]
         futures = []
         for i in range(0, len(scrapers)):
             futures.append(executor.submit(update_nfl_games_for_website, scrapers[i]));
