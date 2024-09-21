@@ -5,3 +5,5 @@ python-dotenv
 deepdiff
 undetected-chromedriver
 setuptools
+pytz
+selenium-stealth

@@ -8,20 +8,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 from datetime import datetime
 from NFL.Game import Game as NFL_Game; 
-month_map = {
-    "Jan" : 1,
-    "Feb" : 2,
-    "Mar" : 3,
-    "Apr" : 4,
-    "May" : 5,
-    "Jun" : 6,
-    "Jul" : 7,
-    "Aug" : 8,
-    "Sep" : 9,
-    "Oct" : 10,
-    "Nov" : 11,
-    "Dec" : 12
-}
+from common.constants import month_map
 class Bet365:
     def __init__(self):
         self.url = "https://www.la.bet365.com/"

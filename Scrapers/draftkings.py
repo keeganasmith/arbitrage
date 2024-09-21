@@ -8,20 +8,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 from datetime import datetime, timedelta
 from NFL.Game import Game as NFL_Game; 
-month_map = {
-    "jan" : 1,
-    "feb" : 2,
-    "mar" : 3,
-    "apr" : 4,
-    "may" : 5,
-    "jun" : 6,
-    "jul" : 7,
-    "aug" : 8,
-    "sep" : 9,
-    "oct" : 10,
-    "nov" : 11,
-    "dec" : 12
-}
+from common.constants import month_map
 def first_num(my_string):
     result = ""
     for i in range(0, len(my_string)):
@@ -30,7 +17,7 @@ def first_num(my_string):
         else:
             break;
     return result
-class Draftkings():
+class Draftkings:
     def __init__(self):
         self.url = "https://sportsbook.draftkings.com/"
         
